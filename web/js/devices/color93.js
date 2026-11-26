@@ -1,6 +1,6 @@
 // COLOR·93 — 致敬 1993 年彩色 LCD 掌机（原创程序化模型）
 import * as THREE from 'three'
-import { M, box, cyl, chip, textPlane, led, screw, shellWithHoles, roundButton } from '../parts.js'
+import { M, box, cyl, chip, textPlane, led, screw, shellWithHoles, tray, roundButton } from '../parts.js'
 import { pcbTexture, liveScreen } from '../textures.js'
 
 const part = (id, num, name, en, desc, fact, slot, home, exploded, size, build) =>
@@ -8,8 +8,7 @@ const part = (id, num, name, en, desc, fact, slot, home, exploded, size, build) 
 
 function buildBottom(ctx) {
   const g = new THREE.Group()
-  box(g, [5.2, 0.4, 2.8], [0, 0, 0], M.ink, 0.16)
-  box(g, [4.95, 0.07, 2.55], [0, 0.21, 0], M.inkSoft, 0.04)
+  tray(g, 5.2, 2.8, 0.42, M.ink, { bottomY: -0.2, base: 0.12, thickness: 0.12 })
   for (const [x, z] of [[-2.25, -1.15], [2.25, -1.15], [-2.25, 1.15], [2.25, 1.15]]) {
     cyl(g, 0.09, 0.1, 0.22, [x, 0.27, z], M.gold, 12)
     screw(g, [x, 0.2, z], 0.055)
@@ -104,7 +103,7 @@ export const color93 = {
   accent: '#2b6cb0',
   camera: { position: [8.4, 8.6, 11.6], target: [0, 1.5, 0] },
   parts: [
-    part('bottom', '01', '底壳', 'BOTTOM CASE', '深色横版底壳，四角定位柱与电池仓预留完成。', '彩色 LCD 的耗电量远高于单色屏，掌机开始追求更长续航。', [0, 0.2, 0], [-5.0, 0.2, 1.8], [0, 1.0, 0], [5.2, 0.5, 2.8], buildBottom),
+    part('bottom', '01', '底壳', 'BOTTOM CASE', '深色横版底壳，四角定位柱与电池仓预留完成。', '彩色 LCD 的耗电量远高于单色屏，掌机开始追求更长续航。', [0, 0.2, 0], [-5.0, 0.2, 1.8], [0, 1.0, 0], [5.2, 0.62, 2.8], buildBottom),
     part('board', '02', '主板', 'COLOR MAIN BOARD', 'CPU、显存与音频芯片共同驱动彩色画面。', '彩色掌机让同一种绿色也能分出深浅，画面表现力大幅提升。', [0, 0.4, 0], [5.0, 0.15, -1.8], [0, 2.1, 0], [4.8, 0.3, 2.35], buildBoard),
     part('screen', '03', '彩色液晶屏', 'COLOR LCD', '彩色液晶屏嵌入金属框，排线尾端连接主板。', '早期的彩色掌机屏幕仍有拖影，快速移动时会留下残影。', [0, 0.58, -0.2], [5.1, 0.2, 1.8], [0, 3.2, -0.2], [3.4, 0.35, 2.3], buildScreen),
     part('pads', '04', '按键胶垫', 'RUBBER PADS', '导电胶垫覆盖方向键、动作键与功能键。', '彩色屏并没有改变按键结构，导电胶垫仍是手感核心。', [0, 0.66, 0.25], [-4.8, 0.15, -2.0], [0, 4.2, 0.25], [4.2, 0.2, 1.8], buildPads),

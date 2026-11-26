@@ -1,6 +1,6 @@
 // PIXELBOY·89 — 致敬 1989 年灰砖掌机（原创程序化模型）
 import * as THREE from 'three'
-import { M, box, cyl, chip, textPlane, led, screw, shellWithHoles, dpad, roundButton, spring } from '../parts.js'
+import { M, box, cyl, chip, textPlane, led, screw, shellWithHoles, tray, dpad, roundButton, spring } from '../parts.js'
 import { pcbTexture, liveScreen } from '../textures.js'
 
 const part = (id, num, name, en, desc, fact, slot, home, exploded, size, build) =>
@@ -8,14 +8,14 @@ const part = (id, num, name, en, desc, fact, slot, home, exploded, size, build) 
 
 function buildBottom(ctx) {
   const g = new THREE.Group()
-  box(g, [3.0, 0.4, 4.9], [0, 0, 0], M.gray, 0.14)
-  box(g, [2.72, 0.08, 4.62], [0, 0.2, 0], M.creamDark, 0.06)
+  tray(g, 3.0, 4.9, 0.54, M.gray, { bottomY: -0.2, base: 0.12, thickness: 0.12 })
+  box(g, [0.65, 0.06, 0.5], [0.95, 0.2, 1.55], M.inkSoft, 0.03)
   // 电池仓
-  box(g, [1.75, 0.14, 0.95], [0, 0.24, 2.0], M.inkSoft, 0.04)
-  spring(g, [-0.72, 0.3, 2.0], 0.06, 0.16)
-  spring(g, [0.72, 0.3, 2.0], 0.06, 0.16)
-  box(g, [0.1, 0.06, 0.5], [-0.82, 0.3, 2.0], M.gold, 0.01)
-  box(g, [0.1, 0.06, 0.5], [0.82, 0.3, 2.0], M.gold, 0.01)
+  box(g, [1.75, 0.14, 0.95], [0, 0.12, 2.0], M.inkSoft, 0.04)
+  spring(g, [-0.72, 0.22, 2.0], 0.06, 0.16)
+  spring(g, [0.72, 0.22, 2.0], 0.06, 0.16)
+  box(g, [0.1, 0.06, 0.5], [-0.82, 0.22, 2.0], M.gold, 0.01)
+  box(g, [0.1, 0.06, 0.5], [0.82, 0.22, 2.0], M.gold, 0.01)
   // 定位柱
   for (const [x, z] of [[-1.15, -2.0], [1.15, -2.0], [-1.15, 0.9], [1.15, 0.9]])
     cyl(g, 0.07, 0.08, 0.22, [x, 0.32, z], M.gold, 12)
@@ -140,16 +140,16 @@ export const pixelboy89 = {
   accent: '#9bbc0f',
   camera: { position: [8.6, 8.8, 12.2], target: [0, 1.7, 0] },
   parts: [
-    part('bottom', '01', '底壳', 'BOTTOM SHELL', '灰色底壳是一切的起点。电池仓、定位柱与扬声器孔都已就位。', '当年的掌机用 4 节五号电池，能连续玩上十几个小时。', [0, 0.2, 0], [-4.4, 0.25, 1.7], [0, 1.1, 0], [3.0, 0.5, 4.9], buildBottom),
-    part('battery', '02', '电池组', 'BATTERY PACK', '两节电池装入底部电池仓，注意弹簧触点对齐负极。', '低电量时屏幕会变暗——老玩家都记得那种紧张感。', [0, 0.45, 2.0], [4.2, 0.25, 2.5], [0, 2.0, 2.0], [1.7, 0.4, 1.0], buildBattery),
-    part('board', '03', '主板', 'MAIN BOARD', '绿色主板承载 CPU 与内存。卡带连接器朝向顶端，排线插座留在右侧。', '它的 CPU 只有约 4 MHz，却跑出了无数经典。', [0, 0.5, -0.55], [-4.4, 0.15, -1.9], [0, 2.9, -0.55], [2.7, 0.3, 3.9], buildBoard),
-    part('lcd', '04', '液晶屏', 'LCD MODULE', '黄绿色液晶屏嵌入金属框架。排线尾端朝向主板插座。', '160×144 像素、四级灰度，是那个年代的「视网膜屏」。', [0, 0.88, -0.75], [4.3, 0.2, -1.7], [0, 3.8, -0.75], [2.5, 0.6, 2.6], buildLcd),
-    part('pads', '05', '按键胶垫', 'RUBBER PADS', '导电胶垫铺在按键下方，每一次回弹都靠它。', '胶垫老化是老掌机按键失灵的常见原因。', [0, 0.92, 1.3], [-3.7, 0.15, 3.5], [0, 4.6, 1.3], [2.6, 0.15, 1.6], buildPads),
-    part('buttons', '06', '按键组', 'BUTTON SET', '十字键、A/B 键与 Start/Select。深红圆键是它的标志。', '十字键的设计专利，影响了之后几乎所有手柄。', [0, 1.0, 1.3], [3.7, 0.2, 3.5], [0, 5.3, 1.3], [2.6, 0.3, 1.6], buildButtons),
-    part('top', '07', '面壳', 'TOP SHELL', '最后扣上面壳：屏幕窗口、按键开孔与电源拨杆各就其位。', '灰砖外壳的耐用程度，堪称电子产品里的传奇。', [0, 0.94, 0], [0, 0.25, -3.9], [0, 6.4, 0], [3.0, 0.45, 4.9], buildTop),
+    part('bottom', '01', '底壳', 'BOTTOM SHELL', '灰色薄壁底壳，电池仓、定位柱与扬声器孔都已就位。', '当年的掌机用 4 节五号电池，能连续玩上十几个小时。', [0, 0.2, 0], [-4.4, 0.25, 1.7], [0, 1.1, 0], [3.0, 0.75, 4.9], buildBottom),
+    part('battery', '02', '电池组', 'BATTERY PACK', '两节电池装入底部电池仓，注意弹簧触点对齐负极。', '低电量时屏幕会变暗——老玩家都记得那种紧张感。', [0, 0.36, 2.0], [4.2, 0.25, 2.5], [0, 2.0, 2.0], [1.7, 0.4, 1.0], buildBattery),
+    part('board', '03', '主板', 'MAIN BOARD', '绿色主板承载 CPU 与内存。卡带连接器朝向顶端，排线插座留在右侧。', '它的 CPU 只有约 4 MHz，却跑出了无数经典。', [0, 0.48, -0.55], [-4.4, 0.15, -1.9], [0, 2.9, -0.55], [2.7, 0.3, 3.9], buildBoard),
+    part('lcd', '04', '液晶屏', 'LCD MODULE', '黄绿色液晶屏嵌入金属框架。排线尾端朝向主板插座。', '160×144 像素、四级灰度，是那个年代的「视网膜屏」。', [0, 0.78, -0.75], [4.3, 0.2, -1.7], [0, 3.8, -0.75], [2.5, 0.6, 2.6], buildLcd),
+    part('pads', '05', '按键胶垫', 'RUBBER PADS', '导电胶垫铺在按键下方，每一次回弹都靠它。', '胶垫老化是老掌机按键失灵的常见原因。', [0, 0.82, 1.3], [-3.7, 0.15, 3.5], [0, 4.6, 1.3], [2.6, 0.15, 1.6], buildPads),
+    part('buttons', '06', '按键组', 'BUTTON SET', '十字键、A/B 键与 Start/Select。深红圆键是它的标志。', '十字键的设计专利，影响了之后几乎所有手柄。', [0, 0.9, 1.3], [3.7, 0.2, 3.5], [0, 5.3, 1.3], [2.6, 0.3, 1.6], buildButtons),
+    part('top', '07', '面壳', 'TOP SHELL', '最后扣上面壳：屏幕窗口、按键开孔与电源拨杆各就其位。', '灰砖外壳的耐用程度，堪称电子产品里的传奇。', [0, 0.9, 0], [0, 0.25, -3.9], [0, 6.4, 0], [3.0, 0.45, 4.9], buildTop),
   ],
   wires: [
-    { id: 'ribbon', name: '屏幕排线', color: '#e8a020', plugLabel: 'A', portLabel: 'A', plug: [0.7, 0.85, 1.2], port: [0.7, 0.55, 1.0], route: [[0.7, 0.72, 1.15], [0.7, 0.62, 1.05]], desc: '把液晶屏的排线插进主板插座。' },
+    { id: 'ribbon', name: '屏幕排线', color: '#e8a020', plugLabel: 'A', portLabel: 'A', plug: [0.7, 0.78, 1.2], port: [0.7, 0.52, 1.0], route: [[0.7, 0.66, 1.15], [0.7, 0.58, 1.05]], desc: '把液晶屏的排线插进主板插座。' },
   ],
   stepOrder: ['bottom', 'battery', 'board', 'lcd', 'pads', 'buttons', 'w:ribbon', 'top'],
   showcase: { type: 'lcd', intro: '液晶屏亮了！点十字键移动小像素人，A / B 让它跳跃。', toy: true },

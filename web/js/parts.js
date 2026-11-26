@@ -51,6 +51,17 @@ export function box(parent, size, pos, mat, radius = 0.04, rot = null) {
   return m
 }
 
+export function tray(parent, w, d, rimY, mat, { bottomY = -0.2, base = 0.12, thickness = 0.12, radius = 0.04 } = {}) {
+  const wallH = rimY - bottomY - base
+  box(parent, [w, base, d], [0, bottomY + base / 2, 0], mat, radius)
+  const y = bottomY + base + wallH / 2
+  box(parent, [w - thickness * 2, wallH, thickness], [0, y, -d / 2 + thickness / 2], mat, radius)
+  box(parent, [w - thickness * 2, wallH, thickness], [0, y, d / 2 - thickness / 2], mat, radius)
+  box(parent, [thickness, wallH, d - thickness * 2], [-w / 2 + thickness / 2, y, 0], mat, radius)
+  box(parent, [thickness, wallH, d - thickness * 2], [w / 2 - thickness / 2, y, 0], mat, radius)
+  parent.userData.rimY = rimY
+}
+
 export function cyl(parent, rTop, rBot, h, pos, mat, seg = 24, rot = null) {
   const m = mesh(new THREE.CylinderGeometry(rTop, rBot, h, seg), mat, pos, rot)
   parent.add(m)

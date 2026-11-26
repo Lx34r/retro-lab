@@ -1,6 +1,6 @@
 // PRO·16 — 致敬 2016 年现代双手柄（原创程序化模型）
 import * as THREE from 'three'
-import { M, box, cyl, sphere, textPlane, led, screw, shellWithHoles, roundButton } from '../parts.js'
+import { M, box, cyl, sphere, textPlane, led, screw, shellWithHoles, tray, roundButton } from '../parts.js'
 import { pcbTexture } from '../textures.js'
 import { createPC } from './key84.js'
 
@@ -9,8 +9,7 @@ const part = (id, num, name, en, desc, fact, slot, home, exploded, size, build) 
 
 function buildBottom(ctx) {
   const g = new THREE.Group()
-  box(g, [5.0, 0.42, 2.6], [0, 0, 0], M.ink, 0.18)
-  box(g, [4.75, 0.07, 2.35], [0, 0.22, 0], M.inkSoft, 0.04)
+  tray(g, 5.0, 2.6, 0.39, M.ink, { bottomY: -0.21, base: 0.12, thickness: 0.12 })
   for (const [x, z] of [[-2.15, -1.0], [2.15, -1.0], [-2.15, 1.0], [2.15, 1.0]]) {
     cyl(g, 0.08, 0.09, 0.22, [x, 0.28, z], M.gold, 12)
     screw(g, [x, 0.22, z], 0.05)
@@ -106,7 +105,7 @@ export const pro16 = {
   accent: '#f26322',
   camera: { position: [8.4, 8.6, 11.4], target: [0.5, 1.1, 0.5] },
   parts: [
-    part('bottom', '01', '底壳', 'BOTTOM CASE', '深色底壳为双摇杆、触控板与肩键预留安装位。', '现代手柄强调双手对称握持，长时间游玩也不容易疲劳。', [0, 0.2, 0], [-5.0, 0.2, 1.8], [0, 1.0, 0], [5.0, 0.5, 2.6], buildBottom),
+    part('bottom', '01', '底壳', 'BOTTOM CASE', '深色底壳为双摇杆、触控板与肩键预留安装位。', '现代手柄强调双手对称握持，长时间游玩也不容易疲劳。', [0, 0.2, 0], [-5.0, 0.2, 1.8], [0, 1.0, 0], [5.0, 0.6, 2.6], buildBottom),
     part('board', '02', '主板', 'WIRELESS BOARD', '主板整合摇杆、按键、无线与灯带控制。', '无线手柄仍需要定期充电，低延迟连接比线缆更重要。', [0, 0.4, 0], [5.0, 0.15, -1.8], [0, 2.1, 0], [4.6, 0.3, 2.2], buildBoard),
     part('sticks', '03', '双摇杆', 'DUAL STICKS', '左右摇杆分别负责移动与视角，防滑帽可拆换。', '双摇杆让 3D 游戏可以同时控制角色移动和摄像机转向。', [0, 0.52, 0], [-4.8, 0.2, -2.0], [0, 3.2, 0], [3.6, 0.8, 1.8], buildSticks),
     part('dpad', '04', '十字键', 'D-PAD', '左侧十字键保留菜单与快捷操作。', '摇杆适合连续移动，十字键在菜单和精确选择中仍然更好用。', [0, 0.58, 0], [4.8, 0.2, 1.9], [0, 4.2, 0], [1.0, 0.3, 1.0], buildDpad),

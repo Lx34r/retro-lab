@@ -1,6 +1,6 @@
 // WATCH·80 — 致敬 1980 年单屏 LCD 掌机（原创程序化模型）
 import * as THREE from 'three'
-import { M, box, cyl, chip, textPlane, led, screw, shellWithHoles, roundButton } from '../parts.js'
+import { M, box, cyl, chip, textPlane, led, screw, shellWithHoles, tray, roundButton } from '../parts.js'
 import { pcbTexture, liveScreen } from '../textures.js'
 
 const part = (id, num, name, en, desc, fact, slot, home, exploded, size, build) =>
@@ -8,8 +8,7 @@ const part = (id, num, name, en, desc, fact, slot, home, exploded, size, build) 
 
 function buildBottom(ctx) {
   const g = new THREE.Group()
-  box(g, [3.2, 0.34, 2.1], [0, 0, 0], M.creamDark, 0.12)
-  box(g, [2.95, 0.06, 1.85], [0, 0.18, 0], M.inkSoft, 0.03)
+  tray(g, 3.2, 2.1, 0.35, M.creamDark, { bottomY: -0.17, base: 0.1, thickness: 0.1 })
   for (const [x, z] of [[-1.35, -0.82], [1.35, -0.82], [-1.35, 0.82], [1.35, 0.82]]) screw(g, [x, 0.18, z], 0.045)
   return g
 }
@@ -86,7 +85,7 @@ export const watch80 = {
   accent: '#c8352b',
   camera: { position: [6.8, 7.4, 9.4], target: [0, 1.3, 0] },
   parts: [
-    part('bottom', '01', '底壳', 'BOTTOM CASE', '米黄色单屏掌机底壳，四角螺丝与电池仓整齐排列。', '早期 LCD 游戏机用固定的液晶屏片，而不是后来流行的点阵屏。', [0, 0.2, 0], [-3.8, 0.2, 1.6], [0, 1.0, 0], [3.2, 0.45, 2.1], buildBottom),
+    part('bottom', '01', '底壳', 'BOTTOM CASE', '米黄色单屏掌机底壳，四角螺丝与电池仓整齐排列。', '早期 LCD 游戏机用固定的液晶屏片，而不是后来流行的点阵屏。', [0, 0.2, 0], [-3.8, 0.2, 1.6], [0, 1.0, 0], [3.2, 0.52, 2.1], buildBottom),
     part('board', '02', '主板', 'GAME BOARD', '小小主板驱动屏幕、蜂鸣器与两个按键。', '单屏掌机的游戏逻辑早已固化在芯片里，插卡并不能换游戏。', [0, 0.36, 0], [3.8, 0.15, -1.5], [0, 2.0, 0], [2.9, 0.25, 1.8], buildBoard),
     part('battery', '03', '纽扣电池', 'COIN CELLS', '两颗纽扣电池为液晶屏与逻辑电路供电。', '纽扣电池结构简单，但误吞非常危险，需要远离儿童。', [-0.65, 0.42, 0.55], [-3.6, 0.15, -1.8], [-0.6, 3.0, 0.8], [1.2, 0.25, 0.8], buildBattery),
     part('screen', '04', '液晶屏', 'LCD GLASS', '固定图案液晶屏嵌入金属框，排线尾端朝向主板。', '那时的画面由预印液晶片构成，角色移动靠液晶分子偏转。', [0, 0.56, -0.25], [3.7, 0.2, 1.6], [0, 4.0, -0.3], [2.4, 0.3, 1.5], buildScreen),

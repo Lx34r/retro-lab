@@ -1,6 +1,6 @@
 // ANALOG·97 — 致敬 1997 年三握柄摇杆手柄（原创程序化模型）
 import * as THREE from 'three'
-import { M, box, cyl, sphere, textPlane, led, screw, shellWithHoles, roundButton } from '../parts.js'
+import { M, box, cyl, sphere, textPlane, led, screw, shellWithHoles, tray, roundButton } from '../parts.js'
 import { pcbTexture } from '../textures.js'
 import { createMiniConsole } from './propad.js'
 
@@ -9,8 +9,7 @@ const part = (id, num, name, en, desc, fact, slot, home, exploded, size, build) 
 
 function buildBottom(ctx) {
   const g = new THREE.Group()
-  box(g, [4.6, 0.42, 2.6], [0, 0, 0], M.ink, 0.16)
-  box(g, [4.35, 0.07, 2.35], [0, 0.22, 0], M.inkSoft, 0.04)
+  tray(g, 4.6, 2.6, 0.39, M.ink, { bottomY: -0.21, base: 0.12, thickness: 0.12 })
   for (const [x, z] of [[-1.95, -1.0], [1.95, -1.0], [-1.95, 1.0], [1.95, 1.0]]) {
     cyl(g, 0.08, 0.09, 0.22, [x, 0.28, z], M.gold, 12)
     screw(g, [x, 0.22, z], 0.05)
@@ -95,7 +94,7 @@ export const analog97 = {
   accent: '#3f9e4d',
   camera: { position: [8.0, 8.2, 10.8], target: [0, 1.1, 0] },
   parts: [
-    part('bottom', '01', '底壳', 'BOTTOM CASE', '深色底壳为中央摇杆、十字键与动作键预留位置。', '三握柄布局让玩家可以用不同手指分别控制摇杆、方向键和动作键。', [0, 0.2, 0], [-4.6, 0.2, 1.8], [0, 1.0, 0], [4.6, 0.5, 2.6], buildBottom),
+    part('bottom', '01', '底壳', 'BOTTOM CASE', '深色底壳为中央摇杆、十字键与动作键预留位置。', '三握柄布局让玩家可以用不同手指分别控制摇杆、方向键和动作键。', [0, 0.2, 0], [-4.6, 0.2, 1.8], [0, 1.0, 0], [4.6, 0.6, 2.6], buildBottom),
     part('board', '02', '主板', 'ANALOG BOARD', '主板读取摇杆电位计与按键触点，输出连续方向信号。', '模拟摇杆输出的是电压变化，而不是简单的通断信号。', [0, 0.4, 0], [4.6, 0.15, -1.8], [0, 2.1, 0], [4.2, 0.3, 2.2], buildBoard),
     part('stick', '03', '摇杆', 'ANALOG STICK', '中央摇杆由底座、轴杆与防滑帽组成。', '摇杆帽上的凹槽能帮助手指感知中心位置，提升操控精度。', [0, 0.52, 0.2], [-4.5, 0.2, -2.0], [0, 3.2, 0.2], [1.0, 0.9, 1.0], buildStick),
     part('dpad', '04', '十字键', 'D-PAD', '左侧十字键保留数字方向输入。', '十字键适合菜单与精确移动，摇杆更适合连续转向。', [0, 0.58, 0], [4.5, 0.2, 1.9], [0, 4.2, 0], [1.0, 0.3, 1.0], buildDpad),

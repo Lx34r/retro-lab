@@ -1,6 +1,6 @@
 // FAMICLONE·83 — 致敬 1983 年红白家庭主机（原创程序化模型）
 import * as THREE from 'three'
-import { M, box, cyl, chip, textPlane, led, screw, shellWithHoles } from '../parts.js'
+import { M, box, cyl, chip, textPlane, led, screw, shellWithHoles, tray } from '../parts.js'
 import { pcbTexture, metalTexture, cartLabelTexture, liveScreen } from '../textures.js'
 
 const part = (id, num, name, en, desc, fact, slot, home, exploded, size, build) =>
@@ -18,8 +18,7 @@ export const TV_JACKS = { Y: tvJackWorld(0.35), W: tvJackWorld(0), R: tvJackWorl
 
 function buildBottom(ctx) {
   const g = new THREE.Group()
-  box(g, [4.4, 0.35, 3.4], [0, 0, 0], M.maroon, 0.1)
-  box(g, [4.1, 0.06, 3.1], [0, 0.18, 0], M.inkSoft, 0.04)
+  tray(g, 4.4, 3.4, 0.505, M.maroon, { bottomY: -0.175, base: 0.1, thickness: 0.1 })
   for (const [x, z] of [[-1.8, -1.3], [1.8, -1.3], [-1.8, 1.3], [1.8, 1.3]])
     cyl(g, 0.07, 0.08, 0.2, [x, 0.28, z], M.gold, 12)
   // 背部 AV 接口
@@ -144,7 +143,7 @@ export const famiclone83 = {
   accent: '#c8352b',
   camera: { position: [9.8, 8.6, 12.8], target: [1.3, 1.2, -0.6] },
   parts: [
-    part('bottom', '01', '底壳', 'BOTTOM CASE', '深红底壳，背部预留了黄白红三个 AV 接口。', '红白机的配色源自当时最便宜的塑料原料。', [0, 0.175, 0], [-4.6, 0.2, 1.8], [0, 1.0, 0], [4.4, 0.4, 3.4], buildBottom),
+    part('bottom', '01', '底壳', 'BOTTOM CASE', '深红底壳，背部预留了黄白红三个 AV 接口。', '红白机的配色源自当时最便宜的塑料原料。', [0, 0.175, 0], [-4.6, 0.2, 1.8], [0, 1.0, 0], [4.4, 0.7, 3.4], buildBottom),
     part('board', '02', '主板', 'MAIN BOARD', 'CPU 与 PPU 两颗大芯片并排，是整台机器的心脏。', 'PPU 负责画面，它的调色板只有 52 种颜色。', [0, 0.4, 0], [-4.6, 0.15, -1.9], [0, 2.2, 0], [4.0, 0.3, 3.0], buildBoard),
     part('slot', '03', '卡带插槽', 'CARTRIDGE SLOT', '60 针卡带插槽，金手指朝上，等待卡带插入。', '插卡前吹一口气，是全世界玩家的共同仪式。', [0, 0.58, -0.3], [4.4, 0.2, 2.4], [0, 3.2, -0.3], [2.6, 0.4, 0.6], buildSlot),
     part('shield', '04', '屏蔽罩', 'RF SHIELD', '金属屏蔽罩盖住主板，只给卡带插槽留出开口。', '屏蔽罩用来减少电磁干扰，避免电视出现雪花。', [0, 0.72, 0], [4.6, 0.15, -1.8], [0, 4.1, 0], [4.1, 0.2, 3.1], buildShield),

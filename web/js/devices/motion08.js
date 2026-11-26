@@ -1,6 +1,6 @@
 // MOTION·08 — 致敬 2008 年体感手柄（原创程序化模型）
 import * as THREE from 'three'
-import { M, box, cyl, chip, textPlane, led, screw, shellWithHoles, roundButton } from '../parts.js'
+import { M, box, cyl, chip, textPlane, led, screw, shellWithHoles, tray, roundButton } from '../parts.js'
 import { pcbTexture } from '../textures.js'
 
 const part = (id, num, name, en, desc, fact, slot, home, exploded, size, build) =>
@@ -8,8 +8,7 @@ const part = (id, num, name, en, desc, fact, slot, home, exploded, size, build) 
 
 function buildBottom(ctx) {
   const g = new THREE.Group()
-  box(g, [1.5, 0.5, 2.9], [0, 0, 0], M.white, 0.18)
-  box(g, [1.28, 0.06, 2.65], [0, 0.26, 0], M.creamDark, 0.04)
+  tray(g, 1.5, 2.9, 0.39, M.white, { bottomY: -0.25, base: 0.12, thickness: 0.12 })
   box(g, [0.7, 0.14, 0.5], [0, 0.29, 0.95], M.dark, 0.03)
   for (const [x, z] of [[-0.55, -1.15], [0.55, -1.15], [-0.55, 1.15], [0.55, 1.15]]) screw(g, [x, 0.26, z], 0.04)
   return g
@@ -105,7 +104,7 @@ export const motion08 = {
   accent: '#2b6cb0',
   camera: { position: [6.6, 7.4, 9.8], target: [0, 1.2, 0] },
   parts: [
-    part('bottom', '01', '底壳', 'REMOTE CASE', '白色长条底壳，电池仓与腕带接口位于机身下部。', '体感手柄把电视遥控器的外形与游戏手柄的输入结合了起来。', [0, 0.2, 0], [-3.7, 0.2, 1.7], [0, 1.0, 0], [1.5, 0.55, 2.9], buildBottom),
+    part('bottom', '01', '底壳', 'REMOTE CASE', '白色长条底壳，电池仓与腕带接口位于机身下部。', '体感手柄把电视遥控器的外形与游戏手柄的输入结合了起来。', [0, 0.2, 0], [-3.7, 0.2, 1.7], [0, 1.0, 0], [1.5, 0.64, 2.9], buildBottom),
     part('board', '02', '主板', 'MOTION BOARD', '主板连接按键、传感器、扬声器与无线模块。', '低功耗无线连接让玩家可以离开沙发，把动作变成输入。', [0, 0.38, 0], [3.7, 0.15, -1.7], [0, 2.1, 0], [1.2, 0.25, 2.55], buildBoard),
     part('sensor', '03', '三轴传感器', '3-AXIS SENSOR', '小型传感器测量倾斜、加速度与旋转。', '三轴传感器能判断手柄朝向，让挥动、倾斜都成为操作。', [0, 0.5, -0.4], [-3.6, 0.15, -1.9], [0, 3.2, -0.4], [0.6, 0.25, 0.55], buildSensor),
     part('buttons', '04', '按键组', 'REMOTE CONTROLS', '方向键、A 键、Home 与肩键组成主要输入。', '体感并没有完全取代按键，精细操作仍然需要实体按键。', [0, 0.58, 0], [3.6, 0.2, 1.8], [0, 4.3, 0], [1.2, 0.3, 2.4], buildButtons),

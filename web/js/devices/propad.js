@@ -1,6 +1,6 @@
 // PROPAD·90 — 致敬 1990 年四色按键手柄（原创程序化模型）
 import * as THREE from 'three'
-import { M, box, cyl, sphere, chip, textPlane, led, shellWithHoles, roundButton } from '../parts.js'
+import { M, box, cyl, sphere, chip, textPlane, led, shellWithHoles, tray, roundButton } from '../parts.js'
 import { pcbTexture } from '../textures.js'
 
 const part = (id, num, name, en, desc, fact, slot, home, exploded, size, build) =>
@@ -8,10 +8,9 @@ const part = (id, num, name, en, desc, fact, slot, home, exploded, size, build) 
 
 function buildBottom(ctx) {
   const g = new THREE.Group()
-  box(g, [4.0, 0.3, 2.0], [0, 0, 0], M.grayLight, 0.14)
+  tray(g, 4.0, 2.0, 0.31, M.grayLight, { bottomY: -0.15, base: 0.1, thickness: 0.1 })
   const gl = sphere(g, 0.55, [-1.85, -0.08, 0.35], M.grayLight, 20); gl.scale.set(1, 0.6, 1.1)
   const gr = sphere(g, 0.55, [1.85, -0.08, 0.35], M.grayLight, 20); gr.scale.set(1, 0.6, 1.1)
-  box(g, [3.6, 0.06, 1.6], [0, 0.16, 0], M.creamDark, 0.04)
   // 线缆出口
   box(g, [0.3, 0.16, 0.2], [0, 0.05, 1.0], M.inkSoft, 0.03)
   return g
@@ -112,7 +111,7 @@ export const propad90 = {
   accent: '#2b6cb0',
   camera: { position: [7.6, 8.2, 10.6], target: [-0.6, 0.8, 0.8] },
   parts: [
-    part('bottom', '01', '底壳', 'BOTTOM SHELL', '浅灰底壳，两端微微鼓起贴合掌心。', '手柄的握持曲线，是人体工学最早的游戏实践。', [0, 0.15, 0], [-4.4, 0.2, -1.8], [0, 1.0, 0], [4.0, 0.4, 2.0], buildBottom),
+    part('bottom', '01', '底壳', 'BOTTOM SHELL', '浅灰底壳，两端微微鼓起贴合掌心。', '手柄的握持曲线，是人体工学最早的游戏实践。', [0, 0.15, 0], [-4.4, 0.2, -1.8], [0, 1.0, 0], [4.0, 0.46, 2.0], buildBottom),
     part('board', '02', '电路板', 'CONTROL PCB', '小巧的电路板，中央是一颗封装芯片。', '手柄芯片每秒扫描按键上百次，确保零延迟。', [0, 0.3, 0], [4.4, 0.15, -1.9], [0, 2.0, 0], [3.4, 0.2, 1.5], buildBoard),
     part('pads', '03', '导电胶垫', 'CONDUCTIVE PADS', '整片导电胶垫覆盖按键区，回弹手感的来源。', '导电胶垫的寿命，决定了老手柄还能不能战。', [0, 0.43, 0], [-4.2, 0.15, 1.9], [0, 2.9, 0], [3.5, 0.15, 1.6], buildPads),
     part('buttons', '04', '按键组', 'BUTTON SET', '十字键 + 蓝绿红黄四色键 + Start/Select。', '四色按键的布局，成为后来无数手柄的模板。', [0, 0.55, 0], [4.2, 0.2, 1.9], [0, 3.8, 0], [3.6, 0.3, 1.6], buildButtons),
