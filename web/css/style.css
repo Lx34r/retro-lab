@@ -320,7 +320,7 @@ input { font-family: inherit; }
 .primary-btn:hover:not(:disabled) { filter: brightness(1.07); transform: translateY(-1px); }
 .primary-btn:disabled { background: var(--site-border); color: var(--site-muted); cursor: not-allowed; }
 .primary-btn.danger { background: var(--danger); color: #fff; }
-.auto-btn { background: var(--site-fg); color: var(--site-bg); }
+.auto-btn { flex: 0 0 auto; align-self: center; padding: 9px 16px; font-size: 13px; background: var(--site-fg); color: var(--site-bg); }
 .auto-btn:hover:not(:disabled) { background: var(--pcb-deep); }
 .auto-btn.running { background: var(--danger); color: #fff; }
 .ghost-btn {
