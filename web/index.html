@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>RETO·LAB 复古硬件组装实验室 — 把童年，一台一台装回去</title>
+<meta name="description" content="互动 3D 组装体验：从 1980 到 2017，亲手装好 12 台经典掌机、主机、手柄与键盘外设，接线、通电、点亮，把童年一台一台装回去。演示体验，原创程序化模型。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2323262b'/%3E%3Crect x='7' y='10' width='18' height='12' rx='2' fill='%23efe9dc'/%3E%3Crect x='10' y='13' width='8' height='6' fill='%239bbc0f'/%3E%3Ccircle cx='22' cy='15' r='1.6' fill='%23f26322'/%3E%3Ccircle cx='24.5' cy='18' r='1.6' fill='%23c8352b'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="./css/style.css">
+<script type="importmap">
+{
+  "imports": {
+    "three": "./vendor/three.module.js",
+    "three/addons/": "./vendor/addons/"
+  }
+}
+</script>
+</head>
+<body>
+
+<nav id="topnav" aria-label="主导航">
+  <a class="brand" href="#/" data-nav="home">
+    <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+    <span class="brand-text"><b class="pixel">RETO·LAB</b><small>复古硬件组装实验室</small></span>
+  </a>
+  <div class="nav-links">
+    <a href="#/" data-nav="home" class="nav-link">组装台</a>
+    <a href="#/gallery" data-nav="gallery" class="nav-link">图鉴</a>
+    <a href="#/#about" data-nav="about" class="nav-link">关于</a>
+  </div>
+  <div class="nav-actions">
+    <button id="guideBtn" class="icon-btn" type="button" aria-label="操作指南" title="操作指南">?</button>
+    <button id="soundToggle" class="icon-btn sound" type="button" aria-label="关闭声音" aria-pressed="true" title="声音开关">
+      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path class="spk" fill="currentColor" d="M4 9v6h4l5 4V5L8 9H4z"/><path class="wav" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/><line class="mut" x1="3" y1="3" x2="21" y2="21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+</nav>
+
+<main id="app">
+
+  <!-- ============ 首页 / 设备库 ============ -->
+  <section id="view-home" class="view" aria-label="设备库">
+    <header class="hero">
+      <div class="hero-bg" aria-hidden="true"></div>
+      <p class="eyebrow pixel">INSERT COIN · WORKSHOP 01</p>
+      <h1>把童年，<br><em>一台一台</em>装回去。</h1>
+      <p class="hero-sub">从 1980 到 2017，十二台经典硬件。从第一块底壳到最后一次通电——<br class="br-desktop">选择、放入、接线、点亮，全程由你亲手完成。</p>
+      <div class="era-chips" role="list" aria-label="年代索引">
+        <button class="era-chip" type="button" data-era="1980s" role="listitem"><b class="pixel">1980s</b><span>单屏与十字键</span></button>
+        <button class="era-chip" type="button" data-era="1990s" role="listitem"><b class="pixel">1990s</b><span>彩色与摇杆</span></button>
+        <button class="era-chip" type="button" data-era="2000s" role="listitem"><b class="pixel">2000s</b><span>双屏与体感</span></button>
+        <button class="era-chip" type="button" data-era="2010s" role="listitem"><b class="pixel">2010s</b><span>混合与客制化</span></button>
+      </div>
+      <div class="hero-stats" id="heroStats" aria-live="polite"></div>
+    </header>
+
+    <div class="section-head">
+      <h2>选择一台，开始组装</h2>
+      <p>每台设备 6–7 个零件 · 接线 · 通电展示，约 3–6 分钟</p>
+    </div>
+    <div class="device-grid" id="deviceGrid"></div>
+
+    <section id="about" class="about">
+      <div class="section-head">
+        <h2>关于这间实验室</h2>
+        <p>硬件会老去，手感不会。</p>
+      </div>
+      <div class="about-grid">
+        <article class="about-card">
+          <span class="about-era pixel">1980s</span>
+          <h3>单屏、红白机与十字键</h3>
+          <p>1980 年代，游戏从街机厅走进客厅，也装进了书包。单屏 LCD、红白主机与长方形手柄，用最简单的输入定义了最初的游戏语言。</p>
+        </article>
+        <article class="about-card">
+          <span class="about-era pixel">1990s</span>
+          <h3>彩色屏幕与模拟摇杆</h3>
+          <p>1990 年代，掌机屏幕有了颜色，手柄长出了肩键、摇杆与第三握柄。更丰富的画面，也开始要求更细腻的操作。</p>
+        </article>
+        <article class="about-card">
+          <span class="about-era pixel">2000s</span>
+          <h3>双屏、触控与体感</h3>
+          <p>2000 年代，上下双屏把信息铺开，触控笔与体感遥控器则把动作变成输入。玩家不再只是坐着按按钮。</p>
+        </article>
+        <article class="about-card">
+          <span class="about-era pixel">2010s</span>
+          <h3>混合掌机与客制化浪潮</h3>
+          <p>2010 年代，主机与掌机的边界逐渐消失，可拆卸握把、无线双手柄与机械键盘让玩家可以亲手选择自己的手感。</p>
+        </article>
+      </div>
+      <p class="disclaimer">本站为互动演示体验：所有设备均为原创程序化 3D 模型，致敬经典硬件的设计语言，与任何厂商无关，亦非真实电器维修指南。组装进度仅保存在你的浏览器本地。</p>
+    </section>
+  </section>
+
+  <!-- ============ 组装台 ============ -->
+  <section id="view-lab" class="view" hidden aria-label="组装台">
+    <div class="lab-top">
+      <button id="backBtn" class="ghost-btn" type="button">← 设备库</button>
+      <div class="lab-title">
+        <b id="labDeviceName">—</b>
+        <span id="labDeviceEra" class="era-badge pixel">—</span>
+      </div>
+      <ol class="phase-steps" id="phaseSteps" aria-label="组装阶段">
+        <li data-phase="assemble"><i>1</i>组装</li>
+        <li data-phase="wire"><i>2</i>接线</li>
+        <li data-phase="power"><i>3</i>点亮</li>
+      </ol>
+    </div>
+
+    <div class="lab-body">
+      <aside class="tray" aria-label="零件清单">
+        <div class="tray-head"><b>零件清单</b><span id="trayCount" class="pixel">0/0</span></div>
+        <ol id="stepList" class="step-list"></ol>
+      </aside>
+
+      <div class="stage" id="stage">
+        <div id="canvasHost" class="canvas-host"></div>
+        <div id="labels" class="labels" aria-hidden="true"></div>
+
+        <div class="toolbar" id="toolbar" role="toolbar" aria-label="视图控制">
+          <label class="tool slider-tool" title="分解程度">
+            <span>分解</span>
+            <input id="explodeSlider" type="range" min="0" max="100" value="55" aria-label="分解程度">
+          </label>
+          <label class="tool slider-tool" title="光照强度">
+            <span>光照</span>
+            <input id="lightSlider" type="range" min="20" max="160" value="100" aria-label="光照强度">
+          </label>
+          <button id="rotateToggle" class="tool toggle" type="button" aria-pressed="false" title="自动旋转">旋转</button>
+          <button id="gridToggle" class="tool toggle on" type="button" aria-pressed="true" title="网格地面">网格</button>
+          <button id="wireToggle" class="tool toggle" type="button" aria-pressed="false" title="线框模式">线框</button>
+          <button id="viewReset" class="tool" type="button" title="重置视角">复位</button>
+          <button id="shotBtn" class="tool" type="button" title="导出当前画面 PNG">截图</button>
+        </div>
+
+        <div class="stage-hint" id="stageHint">拖动旋转 · 滚轮缩放 · 点击零件选择</div>
+        <div class="webgl-fallback" id="webglFallback" hidden>
+          <b>这台设备需要 3D 支持</b>
+          <p>当前浏览器无法建立 WebGL 场景。请开启硬件加速，或使用新版 Chrome / Edge / Safari / Firefox 后重试。</p>
+          <button id="fallbackBack" class="primary-btn" type="button">返回设备库</button>
+        </div>
+      </div>
+
+      <aside class="guide-panel" aria-label="组装引导">
+        <div id="stepInfo" class="step-info"></div>
+        <button id="autoBtn" class="primary-btn auto-btn" type="button">一键组装并点亮</button>
+        <div class="guide-actions" id="guideActions">
+          <button id="placeBtn" class="primary-btn" type="button" disabled>放入组件</button>
+          <button id="hintBtn" class="ghost-btn" type="button">提示位置</button>
+        </div>
+        <div class="progress-wrap">
+          <div class="progress-label"><span>组装进度</span><b id="progressText" class="pixel">0%</b></div>
+          <div class="progress-bar"><i id="progressBar"></i></div>
+        </div>
+        <button id="powerBtn" class="power-btn" type="button" disabled>
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" d="M12 3v8M6.3 6.5a8 8 0 1 0 11.4 0"/></svg>
+          <span>通电点亮</span>
+        </button>
+        <button id="resetBtn" class="ghost-btn small" type="button">重新组装</button>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============ 图鉴 ============ -->
+  <section id="view-gallery" class="view" hidden aria-label="收藏图鉴">
+    <div class="section-head gallery-head">
+      <h2>收藏图鉴</h2>
+      <p>你亲手点亮的设备，会在这里留下记录。</p>
+    </div>
+    <div class="device-grid gallery-grid" id="galleryGrid"></div>
+    <div class="gallery-foot">
+      <button id="resetProgress" class="ghost-btn small" type="button">清空本地进度</button>
+    </div>
+  </section>
+
+</main>
+
+<footer id="footer">
+  <span class="pixel">RETO·LAB</span>
+  <span>原创程序化模型 · 互动演示体验 · 进度保存在本地浏览器</span>
+</footer>
+
+<div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+<div id="guideOverlay" class="overlay" hidden role="dialog" aria-modal="true" aria-label="操作指南">
+  <div class="modal guide-modal">
+    <p class="eyebrow pixel">HOW TO PLAY</p>
+    <h2>三步，点亮一台设备</h2>
+    <div class="guide-cards">
+      <div class="guide-card"><b class="pixel">01</b><h3>选择并放入</h3><p>点击左侧清单或场景中的零件，再点发光卡槽（或「放入组件」）。电脑上也可以直接拖拽零件到卡槽。</p></div>
+      <div class="guide-card"><b class="pixel">02</b><h3>按颜色接线</h3><p>零件装齐后进入接线：先点插头，再点同色同字母的接口。接错会有提示，不会损坏任何东西。</p></div>
+      <div class="guide-card"><b class="pixel">03</b><h3>通电，玩一下</h3><p>按下电源，每台设备都有自己的点亮仪式：像素游戏、按键测试、打字挑战……完成后收入图鉴。</p></div>
+    </div>
+    <button id="guideClose" class="primary-btn" type="button">开始组装</button>
+  </div>
+</div>
+
+<div id="completeModal" class="overlay" hidden role="dialog" aria-modal="true" aria-label="组装完成">
+  <div class="modal complete-modal">
+    <p class="eyebrow pixel">DEVICE ONLINE</p>
+    <h2 id="completeTitle">点亮成功</h2>
+    <p id="completeSub" class="complete-sub"></p>
+    <div class="complete-stats" id="completeStats"></div>
+    <div class="complete-actions">
+      <button id="completeShowcase" class="ghost-btn" type="button">继续把玩</button>
+      <button id="completeRetry" class="ghost-btn" type="button">重新组装</button>
+      <button id="completeNext" class="primary-btn" type="button">下一台设备</button>
+    </div>
+    <button id="completeHome" class="link-btn" type="button">返回设备库</button>
+  </div>
+</div>
+
+<div id="confirmModal" class="overlay" hidden role="dialog" aria-modal="true" aria-label="确认操作">
+  <div class="modal confirm-modal">
+    <h2 id="confirmTitle">再装一次？</h2>
+    <p id="confirmDetail"></p>
+    <div class="confirm-actions">
+      <button id="confirmCancel" class="ghost-btn" type="button">取消</button>
+      <button id="confirmOk" class="primary-btn danger" type="button">确认</button>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="./js/main.js"></script>
+</body>
+</html>
